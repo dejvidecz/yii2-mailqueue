@@ -17,13 +17,17 @@ class m161015_011408_mailqueue_init extends Migration
         }
 
         $tableName = \Yii::$app->getMailer()->table;
-		$this->createTable($tableName, [
-			'id' => Schema::TYPE_PK,
-			'unique_key' => Schema::TYPE_TEXT . ' NULL DEFAULT NULL UNIQUE',
-			'message_data' => Schema::TYPE_TEXT . ' NOT NULL',
-			'attempts' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 0',
-			'send_at' => Schema::TYPE_DATETIME . ' NOT NULL DEFAULT now()',
-		], $tableOptions);
+        $this->createTable($tableName, [
+            'id' => Schema::TYPE_PK,
+            'unique_key' => Schema::TYPE_TEXT . ' NULL DEFAULT NULL UNIQUE',
+            'message_data' => Schema::TYPE_TEXT . ' NOT NULL',
+            'attempts' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 0',
+            'send_at' => Schema::TYPE_DATETIME . ' NOT NULL DEFAULT now()',
+            'usr_sender' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'rmv_hero' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT 0'
+        ], $tableOptions);
+
+        $this->addForeignKey('fk-usr-identity', $tableName, 'usr_sender', 'usr_identity', 'id', 'RESTRICT');
 
         $path = explode('.', $this->db->schema->getRawTableName($tableName));
         $indexName = 'idx_' . end($path) . '_send_at';

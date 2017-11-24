@@ -13,6 +13,8 @@ use yii\db\ActiveRecord;
  * This is the model class for table "{{%mail_queue}}".
  *
  * @property integer $id
+ * @property integer $usr_sender
+ * @property bool $rmv_hero
  * @property string $unique_key unique key for the mail message, new message with the same key will replace old one
  * @property string $message_data
  * @property integer $attempts count of attempts to send mail message
@@ -38,7 +40,7 @@ class MailQueue extends ActiveRecord
         return [
             [['message_data'], 'required'],
             [['unique_key'], 'string'],
-            [['attempts'], 'integer'],
+            [['attempts', 'usr_identity', 'rmv_hero'], 'integer'],
             [['send_at'], 'safe'],
         ];
     }
@@ -71,6 +73,19 @@ class MailQueue extends ActiveRecord
     public function setUniqueKey($key)
     {
         $this->unique_key = $key;
+    }
+
+    /**
+     * @param int $identityId
+     */
+    public function setIdentity($identityId)
+    {
+        $this->usr_sender = $identityId;
+    }
+
+    public function setRmvHero($rmvHero)
+    {
+        $this->rmv_hero = $rmvHero;
     }
 
     /**
@@ -166,4 +181,6 @@ class MailQueue extends ActiveRecord
 
         parent::afterFind();
     }
+
+
 }

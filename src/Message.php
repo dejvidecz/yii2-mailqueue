@@ -69,11 +69,28 @@ class Message extends \yii\swiftmailer\Message implements MessageInterface
         return $this;
     }
 
+    public function identity($identityId)
+    {
+        $this->getModel()->setIdentity($identityId);
+
+        return $this;
+    }
+
+    public function rmvHero($rmvHero)
+    {
+        $this->getModel()->setRmvHero($rmvHero);
+
+        return $this;
+    }
+
     /**
      * @inheritdoc
      */
     public function queue()
     {
+        if (!$this->getModel()->usr_sender) {
+            throw new \Exception("Usr sender has to be set");
+        }
         return $this->getModel()->save();
     }
 

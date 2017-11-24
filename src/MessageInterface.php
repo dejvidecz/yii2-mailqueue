@@ -53,6 +53,18 @@ interface MessageInterface extends \yii\mail\MessageInterface
     public function unique($key);
 
     /**
+     * @param int $identityId a user id
+     * @return $this
+     */
+    public function identity($identityId);
+
+    /**
+     * @param bool $rmvHero a user id
+     * @return $this
+     */
+    public function rmvHero($rmvHero);
+
+    /**
      * Enqueue the mail message storing it in the table.
      *
      * @return boolean true on success, false otherwise
