@@ -40,7 +40,7 @@ class MailQueue extends ActiveRecord
         return [
             [['message_data'], 'required'],
             [['unique_key'], 'string'],
-            [['attempts', 'usr_identity', 'rmv_hero'], 'integer'],
+            [['attempts', 'usr_sender', 'rmv_hero'], 'integer'],
             [['send_at'], 'safe'],
         ];
     }

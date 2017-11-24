@@ -77,7 +77,7 @@ class Mailer extends \yii\swiftmailer\Mailer
             /* @var $model MailQueue */
             $model = $list[$i];
             if ($model->rmv_hero) {
-                if (common\rbac\Access::isExclusive(common\modules\usr\models\db\UsrIdentity::findOne($model->usr_sender))) {
+                if (\common\rbac\Access::isExclusive(\common\modules\usr\models\db\UsrIdentity::findOne($model->usr_sender))) {
                     $model->delete();
                     continue;
                 }
